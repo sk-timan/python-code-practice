@@ -1,0 +1,43 @@
+#x=3 # Creat x and assign value 3 to it 
+#x=x*x # Bind x to value 9
+#print (x)
+#n=input('Enter a number: ')
+#print n
+
+
+#x=15
+#if(x/2)*2==x:
+#   print 'even'
+#else: 
+#   print 'odd'
+
+
+#z='b'
+#if 'x'<z:
+#   print ('Hellow')	
+#print ('Mom')
+
+
+#x=15
+#y=5
+#z=11
+#print (x,y,z)
+#if  x<y and x<z:
+#	  print ('x is least')
+#elif y<z:
+#	  print ('y is least')
+#else:print ('z is least')
+
+
+#y=0
+#x=3
+#mon=x
+#while mon>0:
+#	  y=y+x
+#	  mon=mon-1
+#	  print (y)
+
+2018.4.19 总结：1.字符串用‘。。。。’表示.
+                2.if，else，elif,while等后要加冒号（：).
+                3.上下句按顺序分级，错级容易出错.
+                4.print后加括号.                                          
