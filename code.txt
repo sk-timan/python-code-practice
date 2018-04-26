@@ -144,9 +144,129 @@
                2.（！=）表示不相等。
                3.（），表示变量；【】，表示不变量。
                4.引用系统中单个变量要加逗号，如:(i,).
-               5.(%=)表示取余数；“int()"表示取整。
+               5.(%=)表示取余数；“int()"表示取整的数！
                6."for..in..."语句表示在一定范围取数。
                7.s[0],s[1]....s[-1]
 
 
-   
+
+
+#x=16
+#def sqrt(x):
+#	ans=0
+#	if x>=0:
+#	       while ans*ans<x:
+#		               ans=ans+1
+#	       if ans*ans !=x:
+#		       print (x,'is not a perfect aquare')
+#		       return None
+#	       else: return ans
+#	else:
+#		       print (x,'is a negative number')
+#		       return None
+
+
+
+
+#def solve(numLegs,numHeads):
+#	for numChicks in range(0,numHeads+1):
+#		numPigs=numHeads-numChicks
+#		totLegs=4*numPigs+numChicks*2
+#		if totLegs==numLegs:
+#			return (numChicks,numPigs)
+#	print('wrong')
+#	return None，None
+
+
+
+
+#def barnYard():
+#		 heads=int(input('Number of legs:', ))
+#		 legs=int(input('Number of heads:', ))
+#		 pigs,chickens=solve(heads,legs)
+#		 if pigs==None:
+#		     print('the Number of legs(or heads) is not suitable')
+#		 else:
+#		       print('Number of pigs=',pigs)
+#		       print('Number of chickens=',chickens)
+
+
+
+
+#def solve1(numLegs,numHeads):
+#	for numSpiders in range(0,numHeads+1):
+#		for numChickens in range(0,numHeads-numSpiders+1):
+#			numPigs=numHeads-numSpiders-numChickens
+#			totLegs=4*numPigs+2*numChickens+8*numSpiders
+#			if totLegs==numLegs:
+#				return numPigs,numChickens,numSpiders
+#	return None,None,None
+
+
+
+
+
+
+
+
+
+#def barnYard1():
+#	heads=int(input('Number of heads:', ))
+#	legs=int(input('Number of legs:', ))
+#	pigs,chickens,spiders=solve1(legs,heads)
+#	if pigs==None:
+#		print('the number of heads(or legs)is not suitable')
+#	else:
+#		print('Number of piges=',pigs)
+#		print('Number of chickens=',chickens)
+#		print('Number of spiders=',spiders)
+
+
+
+
+
+
+
+
+#def Palindrome(s):
+#	if len(s)<=1:
+#		return True
+#	else:return s[0]==s[-1] and Palindrome(s[1：-1])
+
+
+
+
+
+
+
+#def Palindrome1(s,indent):
+#	       print(indent, 'First scan',s)
+#	       if len(s)<=1:
+#		       print(indent, 'Second scan')
+#		       return True
+#	       else:
+#		       ans=s[0]==s[-1]and Palindrome1(s[1:-1],indent+indent)
+#		       print(indent,'Come back',ans)
+#		       return ans
+
+
+
+
+
+
+#def fib(x,indent):
+#	       print(indent,'First scan',x)
+#	       if x==0 or x==1:
+#		       print(indent,'Second scan')
+#		       return 1
+#	       else:
+#		       ans=fib(x-1,indent)+fib(x-2,indent)
+#		       print('Third scan',ans)
+#		       return ans
+
+
+2018.4.26总结：1.递归算法，找准循环位置。
+               2.len表示逐一扫描括号中的字符。
+               3.and:全真取最后，有假取头假；or:全假取最后，有真取头真。
+	       4.s[0:-1]表示取第二个到倒数第二个的元素。
+               5.input后表示运行时，用户要输入的值。
