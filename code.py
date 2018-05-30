@@ -660,7 +660,7 @@
 
 
 
-##def maxVal(w,v,i,aW):                    -----------最优子结构
+##def maxVal(w,v,i,aW):                    -----------最优子结构(背包问题）
 ##    print('maxVal callde with:',i,aW)
 ##    global numCalls
 ##    numCalls+=1
@@ -700,7 +700,7 @@
 
 
 
-##def fastMaxVal(w,v,i,aW,m):       ---------动态规划
+##def fastMaxVal(w,v,i,aW,m):       ---------动态规划（背包问题）
 ##    global numCalls
 ##    numCalls+=1
 ##    try:
@@ -745,3 +745,296 @@
 ##                6.IOError为输入输出错误，通常为调用了不存在的文件.
 ##                7.运用二分法查找出程序中的bug,常用print打出上文结果.
                 
+
+
+
+
+
+
+##def addPoints(p1,p2):                     -------数据为列表
+##    r=[]
+##    r.append(p1[0]+p2[0])
+##    r.append(p1[1]+p2[1])
+##    return r
+##p=[1,2]
+##q=[3,1]
+##r=addPoints(p,q)
+##print (r)
+
+
+
+
+
+##class cartesianPoint:
+##    pass
+##cp1=cartesianPoint()
+##cp2=cartesianPoint()
+##cp1.x=1.0
+##cp1.y=2.0
+##cp2.x=1.0
+##cp2.y=3.0
+##
+##
+##
+##
+##
+##def samePoint(p1,p2):
+##    return(p1.x==p2.x)and(p1.y==p2.y)
+##
+##
+##import math
+##class polarPoint:
+##    pass
+##pp1=polarPoint()
+##pp2=polarPoint()
+##pp1.radius=1.0
+##pp1.angle=0
+##pp2.radius=2.0
+##pp2.angle=math.pi/4.0
+
+
+##import math
+##class cPoint:
+##    def __init__(self,x,y):
+##        self.x=x
+##        self.y=y
+##        self.radius=math.sqrt(self.x*self.x+self.y*self.y)
+##        self.angle=math.atan2(self.y,self.x)
+##    def cartesian(self):
+##        return (self.x,self.y)
+##    def polar(self):
+##        return (self.radius,self.angle)
+##    def __str__(self):                                     ---重载
+##        return '('+str(self.x)+','+str(self.y)+')'                       
+##    def __gt__(self,other):                             ---重载
+##        return (self.x>other.x)and(self.y>other.y)
+##        
+##
+##a=cPoint(1.0,2.0)
+##
+##class pPoint:
+##    def __init__(self,r,a):
+##        self.radius=r
+##        self.angle=a
+##        self.x=r*math.cos(a)
+##        self.y=r*math.sin(a)
+##    def cartesian(self):
+##        return(self.x,self.y)
+##    def polar(self):
+##        return (self.radius,self.angle)
+##    def __str__(self):
+##        return  ('('+str(self.x)+','+str(self.y)+')')
+##    def __gt__(self,other):
+##        return(self.x>other.x)and(self.y>other.y)
+##
+##b=pPoint(1.0,2.0)
+##
+##
+##
+##class Segment:
+##    def __init__(self,start,end):
+##        self.start=start
+##        self.end=end
+##    def length(self):
+##        return math.sqrt(((self.start.x-self.end.x)*(self.start.x-self.end.x))
+##                         +((self.start.y-self.end.y)*(self.start.y-self.end.y)))
+##
+##
+##p1=cPoint(3.0,4.0)
+##p2=cPoint(5.0,7.0)
+##s1=Segment(p1,p2)
+##print(s1.length())
+##
+##
+##class Rectangle:                                            -----创建实例
+##    def __init__(self,width,height,corner):
+##        self.width=width
+##        self.height=height
+##        self.corner=corner
+##
+##        
+##def findCenter(box):                                        -----继承
+##    p=cPoint(box.corner.x+box.width/2.0,box.corner.y-box.height/2.0)
+##    return p
+##box=Rectangle(100,200,p1)
+##print(findCenter(box))
+##
+##def growRect(box,dwidth,dheight):                  -----修改
+##    box.width=box.width+dwidth
+##    box.height=box.height+dheight
+##
+##growRect(box,10,20)
+##print(findCenter(box))
+    
+
+
+
+
+
+##class newPoint:
+##    def __init__(self,x=0,y=0):
+##        self.x=x
+##        self.y=y
+##    def __str__(self):
+##        return '('+str(self.x)+','+str(self.y)+')'
+##    def __eq__(self,other):
+##        return (self.x==other.x)and(self.y==other.y)
+##    def __add__(self,other):
+##        return newPoint(self.x+other.x,self.y+other.y)
+##    def __lt__(self,other):
+##        return (self.x<other.x)and(self.y<other.y)
+##
+##
+##origin=newPoint()
+##p1=newPoint(3.0,4.0)
+##p2=newPoint()
+##p3=p1+p2
+##print(p3)
+##print(p1<p2)
+
+
+
+##2018.5.30总结：1.类运算重载：__init__(self)：  ---构造方法；
+##                             __add__(self, other): ----加法；
+##                             __lt__(self, other):  -----小于比较；
+##                             __eq__(self, other): -----全等比较；
+##                             __gt__(self, other): -----大于比较；
+##                             __str__(self):       -----打印,print()函数的指定输出对象
+##               2.继承、修改需在定义函数最后的括号内署名原类（为保持函数清洁，通常需用第二名称代替原类);
+
+
+
+
+
+
+
+
+
+
+import operator
+
+class Person:
+    def __init__(self,family_name,first_name):
+        self.family_name=family_name
+        self.first_name=first_name
+    def familyName(self):
+        return self.family_name
+    def firstName(self):
+        return self.first_name
+    def __eq__(self,other):
+        return  operator.eq((self.family_name,self.first_name),
+                            (other.family_name,other.first_name))
+    def __str__(self):
+        return ('<person: %s %s>'%(self.first_name,self.family_name))
+    def say(self,toWhom,something):
+            return (self.first_name+' '+self.family_name+' says to '+toWhom.firstName()+
+                  ' '+toWhom.familyName()+': '+something)
+    def sing(self,toWhom,something):
+        return self.say(toWhom,something+'tra la la')
+
+per=Person('Frank','Fooba')
+
+
+class MITPerson(Person):
+    nextIdNum=0
+    def __init__(self,familyName,firstName):                #-------为子类定义变量
+        Person.__init__(self,familyName,firstName)         # -------为子类指定父类中的变量（父类的初始化）       
+        self.idNum=MITPerson.nextIdNum
+        MITPerson.nextIdNum+=1
+    def getIdNum(self):
+        return self.idNum
+    def __str__(self):
+        return ('<MIT Person: %s %s >'%(self.first_name,self.family_name))
+    def __eq__(self,other):
+        return operator.eq(self.idNum,other.idNum)
+
+p1=MITPerson('Smith','Fred')
+p2=MITPerson('Foobar','Jane')
+print(p1.getIdNum())
+print(p2.getIdNum())
+
+    
+
+
+class UG(MITPerson):
+    def __init__(self,familyName,firstName):
+        MITPerson.__init__(self,familyName,firstName)
+        self.year=None
+    def setYear(self,year):
+        if year>5:
+            raise OverflowError('Too many')
+        self.year=year
+    def getYear(self):
+        return self.year
+    def say(self,toWhom,something):                     #---------修改，模块对应，相当于重载了say函数
+        return MITPerson.say(self,toWhom,'Excuse me,but '+something)
+
+me=Person('Grimson','Eric')
+ug=UG('Doe','Jane')
+
+
+
+
+
+
+
+class Prof(MITPerson):
+    def __init__(self,familyName,firstName,rank):
+        MITPerson.__init__(self,familyName,firstName)
+        self.rank=rank
+        self.teaching={}
+    def addTeaching(self,term,subj):
+        try:
+            self.teaching[term].append(subj)
+        except KeyError:
+            self.teaching[term]=[subj]
+    def getTeaching(self,term):
+        try:
+            return self.teaching[term]
+        except KeyError:
+            return None
+    def lecture(self,toWhom,something):
+        return self.say(toWhom,something+' as it is obvious')
+    def say(self,toWhom,something):
+        if type(toWhom)==UG:
+            return MITPerson.say(self,toWhom,'I do not understand why you say '+something)
+        elif type(toWhom)==Prof:
+            return MITPerson.say(self,toWhom,'I really liked your paper on '+something)
+        else:
+            return self.lecture(something)
+
+
+me=Prof('Grimson','Eric','Full')
+me.addTeaching('F08','6.00')
+me.addTeaching('S09','6.00')
+me.addTeaching('S09','6.xxx')
+print(me.getTeaching('F08'))
+print(me.getTeaching('S09'))
+print(me.getTeaching('S08'))
+print(me.teaching)
+
+
+class Faculty:
+    def __init__(self):
+        self.names=[]
+        self.IDs=[]
+        self.members=[]
+        self.place=None
+    def add(self,who):
+        if type(who)!=Prof:
+            raise TypeError('not a professor')
+        if who.getIdNum() in self.IDs:
+            raise ValueError('duplicate ID')
+        self.names.append(who.familyName())
+        self.IDs.append(who.getIdNum())
+        self.members.append(who)
+    def __iter__(self):
+        self.place=0
+        return self
+    def __next__(self):
+        if self.place>=len(self.names):
+            raise StopIteration
+        self.place+=1
+        return self.members[self.place-1]
+
+
