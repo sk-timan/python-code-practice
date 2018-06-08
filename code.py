@@ -911,66 +911,158 @@
 
 
 
-import operator
+##import operator
+##
+##class Person:
+##    def __init__(self,family_name,first_name):
+##        self.family_name=family_name
+##        self.first_name=first_name
+##    def familyName(self):
+##        return self.family_name
+##    def firstName(self):
+##        return self.first_name
+##    def __eq__(self,other):
+##        return  operator.eq((self.family_name,self.first_name),
+##                            (other.family_name,other.first_name))
+##    def __str__(self):
+##        return ('<person: %s %s>'%(self.first_name,self.family_name))     #------------%s表示格式化这个字符串,之后补充在%后面的为此格式化的内容
+##    def say(self,toWhom,something):
+##            return (self.first_name+' '+self.family_name+' says to '+toWhom.firstName()+
+##                  ' '+toWhom.familyName()+': '+something)
+##    def sing(self,toWhom,something):
+##        return self.say(toWhom,something+'tra la la')
+##
+##per=Person('Frank','Fooba')
+##
+##
+##class MITPerson(Person):
+##    nextIdNum=0
+##    def __init__(self,familyName,firstName):                #-------为子类定义变量
+##        Person.__init__(self,familyName,firstName)         # -------为子类指定父类中的变量（父类的初始化）       
+##        self.idNum=MITPerson.nextIdNum
+##        MITPerson.nextIdNum+=1
+##    def getIdNum(self):
+##        return self.idNum
+##    def __str__(self):
+##        return ('<MIT Person: %s %s >'%(self.first_name,self.family_name))
+##    def __eq__(self,other):
+##        return operator.eq(self.idNum,other.idNum)
+##
+##p1=MITPerson('Smith','Fred')
+##p2=MITPerson('Foobar','Jane')
+##print(p1.getIdNum())
+##print(p2.getIdNum())
+##
+##    
+##
+##
+##class UG(MITPerson):
+##    def __init__(self,familyName,firstName):
+##        MITPerson.__init__(self,familyName,firstName)
+##        self.year=None
+##    def setYear(self,year):
+##        if year>5:
+##            raise OverflowError('Too many')
+##        self.year=year
+##    def getYear(self):
+##        return self.year
+##    def say(self,toWhom,something):                     #---------修改，模块对应，相当于重载了say函数
+##        return MITPerson.say(self,toWhom,'Excuse me,but '+something)
+##
+##me=Person('Grimson','Eric')
+##ug=UG('Doe','Jane')
+##
+##
+##
+##
+##
+##
+##
+##class Prof(MITPerson):
+##    def __init__(self,familyName,firstName,rank):
+##        MITPerson.__init__(self,familyName,firstName)
+##        self.rank=rank
+##        self.teaching={}
+##    def addTeaching(self,term,subj):
+##        try:
+##            self.teaching[term].append(subj)
+##        except KeyError:
+##            self.teaching[term]=[subj]
+##    def getTeaching(self,term):
+##        try:
+##            return self.teaching[term]
+##        except KeyError:
+##            return None
+##    def lecture(self,toWhom,something):
+##        return self.say(toWhom,something+' as it is obvious')
+##    def say(self,toWhom,something):
+##        if type(toWhom)==UG:
+##            return MITPerson.say(self,toWhom,'I do not understand why you say '+something)
+##        elif type(toWhom)==Prof:
+##            return MITPerson.say(self,toWhom,'I really liked your paper on '+something)
+##        else:
+##            return self.lecture(something)
+##
+##
+##me=Prof('Grimson','Eric','Full')
+##me.addTeaching('F08','6.00')
+##me.addTeaching('S09','6.00')
+##me.addTeaching('S09','6.xxx')
+##print(me.getTeaching('F08'))
+##print(me.getTeaching('S09'))
+##print(me.getTeaching('S08'))
+##print(me.teaching)
+##
+##
+##
+##
+##
+##class Faculty:
+##    def __init__(self):
+##        self.names=[]
+##        self.IDs=[]
+##        self.members=[]
+##        self.place=None
+##    def add(self,who):
+##        if type(who)!=Prof:
+##            raise TypeError('not a professor')
+##        if who.getIdNum() in self.IDs:
+##            raise ValueError('duplicate ID')
+##        self.names.append(who.familyName())
+##        self.IDs.append(who.getIdNum())
+##        self.members.append(who)
+##    def __iter__(self):
+##        self.place=0
+##        return self
+##    def __next__(self):
+##        if self.place>=len(self.names):
+##            raise StopIteration
+##        self.place+=1
+##        return self.members[self.place-1]
+##
+##
+##
+##grimson=Prof('Grimson','Eric','Full')
+##lozano=Prof('Lozano-Perez','Tomas','Full')
+##guttag=Prof('Guttag','John','Full')
+##barzilay=Prof('Barzilay','Regina','Associate')
+##course6=Faculty()
+##course6.add(grimson)
+##course6.add(lozano)
+##course6.add(guttag)
+##course6.add(barzilay)
+##
+##
+##for p in course6:
+##    print (p.familyName())
+##
+##
+##print(ug.say(grimson,'I do not understand'))
+##print(grimson.say(ug,'you do not understand'))
+##print(grimson.say(guttag,'why the sky is blue'))
+##
+##print(ug.sing(ug,'I think I finally understand'))
 
-class Person:
-    def __init__(self,family_name,first_name):
-        self.family_name=family_name
-        self.first_name=first_name
-    def familyName(self):
-        return self.family_name
-    def firstName(self):
-        return self.first_name
-    def __eq__(self,other):
-        return  operator.eq((self.family_name,self.first_name),
-                            (other.family_name,other.first_name))
-    def __str__(self):
-        return ('<person: %s %s>'%(self.first_name,self.family_name))
-    def say(self,toWhom,something):
-            return (self.first_name+' '+self.family_name+' says to '+toWhom.firstName()+
-                  ' '+toWhom.familyName()+': '+something)
-    def sing(self,toWhom,something):
-        return self.say(toWhom,something+'tra la la')
-
-per=Person('Frank','Fooba')
-
-
-class MITPerson(Person):
-    nextIdNum=0
-    def __init__(self,familyName,firstName):                #-------为子类定义变量
-        Person.__init__(self,familyName,firstName)         # -------为子类指定父类中的变量（父类的初始化）       
-        self.idNum=MITPerson.nextIdNum
-        MITPerson.nextIdNum+=1
-    def getIdNum(self):
-        return self.idNum
-    def __str__(self):
-        return ('<MIT Person: %s %s >'%(self.first_name,self.family_name))
-    def __eq__(self,other):
-        return operator.eq(self.idNum,other.idNum)
-
-p1=MITPerson('Smith','Fred')
-p2=MITPerson('Foobar','Jane')
-print(p1.getIdNum())
-print(p2.getIdNum())
-
-    
-
-
-class UG(MITPerson):
-    def __init__(self,familyName,firstName):
-        MITPerson.__init__(self,familyName,firstName)
-        self.year=None
-    def setYear(self,year):
-        if year>5:
-            raise OverflowError('Too many')
-        self.year=year
-    def getYear(self):
-        return self.year
-    def say(self,toWhom,something):                     #---------修改，模块对应，相当于重载了say函数
-        return MITPerson.say(self,toWhom,'Excuse me,but '+something)
-
-me=Person('Grimson','Eric')
-ug=UG('Doe','Jane')
 
 
 
@@ -978,63 +1070,719 @@ ug=UG('Doe','Jane')
 
 
 
-class Prof(MITPerson):
-    def __init__(self,familyName,firstName,rank):
-        MITPerson.__init__(self,familyName,firstName)
-        self.rank=rank
-        self.teaching={}
-    def addTeaching(self,term,subj):
-        try:
-            self.teaching[term].append(subj)
-        except KeyError:
-            self.teaching[term]=[subj]
-    def getTeaching(self,term):
-        try:
-            return self.teaching[term]
-        except KeyError:
-            return None
-    def lecture(self,toWhom,something):
-        return self.say(toWhom,something+' as it is obvious')
-    def say(self,toWhom,something):
-        if type(toWhom)==UG:
-            return MITPerson.say(self,toWhom,'I do not understand why you say '+something)
-        elif type(toWhom)==Prof:
-            return MITPerson.say(self,toWhom,'I really liked your paper on '+something)
-        else:
-            return self.lecture(something)
+##
+##2018.6.1  总结：1.__iter__;
+##                  __next__;      循环体格式
+##
+##                2."rase"错误异常执行语句，后接错误类型+提示语；
+##                3.每一类对应一个type，父子类也一样；
+##                4.执行比较语句（eq、lt、gt等)需要import operator.
 
 
-me=Prof('Grimson','Eric','Full')
-me.addTeaching('F08','6.00')
-me.addTeaching('S09','6.00')
-me.addTeaching('S09','6.xxx')
-print(me.getTeaching('F08'))
-print(me.getTeaching('S09'))
-print(me.getTeaching('S08'))
-print(me.teaching)
 
 
-class Faculty:
-    def __init__(self):
-        self.names=[]
-        self.IDs=[]
-        self.members=[]
-        self.place=None
-    def add(self,who):
-        if type(who)!=Prof:
-            raise TypeError('not a professor')
-        if who.getIdNum() in self.IDs:
-            raise ValueError('duplicate ID')
-        self.names.append(who.familyName())
-        self.IDs.append(who.getIdNum())
-        self.members.append(who)
-    def __iter__(self):
-        self.place=0
-        return self
-    def __next__(self):
-        if self.place>=len(self.names):
-            raise StopIteration
-        self.place+=1
-        return self.members[self.place-1]
+
+
+
+
+                
+
+
+##import math
+##import pandas as pd
+##import numpy as np
+##class Location:
+##    def __init__(self,x,y):
+##        self.x=float(x)
+##        self.y=float(y)
+##    def move_1(self,xc,yc):
+##        return Location(self.x+float(xc),self.y+float(yc))
+##    def getCoords(self):
+##        return self.x,self.y
+##    def getDist(self,other):
+##        ox,oy=other.getCoords()
+##        xDist=self.x-ox
+##        yDist=self.y-oy
+##        return math.sqrt(xDist**2+yDist**2)
+##
+##class CompassPt:
+##    possibles=('N','S','E','W')
+##    def __init__(self,pt):
+##        if pt in self.possibles:
+##            self.pt=pt
+##        else:
+##            raise ValueError('in CompassPt.__init__')
+##    def move_2(self,dist):
+##        if self.pt=='N':
+##            return (0,dist)  ###( , )对应（x,y)
+##        elif self.pt=='S':
+##            return (0,-dist)
+##        elif self.pt=='E':
+##            return (dist,0)
+##        elif self.pt=='W':
+##            return (-dist,0)
+##        else:
+##            raise ValueError('in CompassPt.move')
+##
+##class Field:
+##    def __init__(self,Drunk_1,loc):
+##        self.Drunk_1=Drunk_1
+##        self.loc=loc
+##    def move_3(self,CP,dist):
+##        oldLoc=self.loc
+##        xc,yc=CP.move_2(dist)
+##        self.loc=oldLoc.move_1(xc,yc)
+##    def getLoc(self):
+##        return self.loc
+##    def getDrunk(self):
+##        return self.Drunk_1
+##
+##class Drunk:
+##    def __init__(self,name):
+##        self.name=name
+##    def move_4(self,Field_1):#,time=1):                       ##-----应输入量为1个
+##        if Field_1.getDrunk()!=self:
+##            raise ValueError('Drunk.move called with drunk not in field')
+##        #for i in range(time):                               #---range(0,time)
+##        CP=CompassPt(np.random.choice(CompassPt.possibles))
+##        Field_1.move_3(CP,1)
+##
+##def performTrial(time,Field_1):
+##    start=Field_1.getLoc()
+##    distances=[0.0]
+##    for t in range(1,time+1):
+##        Field_1.getDrunk().move_4(Field_1)
+##        newLoc=Field_1.getLoc()
+##        distance=newLoc.getDist(start)
+##        distances.append(distance)
+##    return distances
+##    
+##import matplotlib.pyplot as plt
+##Drunk_1=Drunk('Homer Simpson')
+##for i in range(3):
+##    Field_1=Field(Drunk_1,Location(0,0))
+##    distances=performTrial(500,Field_1)
+##    plt.plot(distances)
+##plt.title('Homer\'s Random Walk')
+##plt.xlabel('Time')
+##plt.ylabel('Distance from Origin')
+##plt.show()
+##
+##
+##
+##
+##def performSim(time,numTrials):   #--------多次进行上面的模拟
+##    distLists=[]
+##    for trial in range(numTrials):
+##        d=Drunk('Drunk'+str(trial))
+##        Field_1=Field(d,Location(0,0))
+##        distances=performTrial(time,Field_1)
+##        distLists.append(distances)
+##    return distLists
+##def ansQuest(maxTime,numTrials):
+##    means=[]
+##    distLists=performSim(maxTime,numTrials)
+##    for t in range(maxTime+1):
+##        tot=0.0
+##        for distL in distLists:
+##            tot+=distL[t]       #------累加每第t步后距原点的距离（distance)
+##        means.append(tot/numTrials)
+##        
+####        print(len(distLists))
+####        print(tot)
+####        print(means)
+####        print(t)
+##    plt.plot(means)
+##    plt.ylabel('distance')
+##    plt.xlabel('time')
+##    plt.title('Average Distance vs. Time ('+str(len(distLists))+'trials)')
+##
+##ansQuest(500,100)
+##plt.show()
+##
+
+
+
+##
+##import matplotlib.pyplot as plt
+##import numpy as np
+##
+##plt.plot([1,2,3,4])
+##plt.plot([5,6,7,8])
+##
+##plt.show()
+##
+##
+##plt.plot([1,2,3,4],[1,4,9,16])
+##plt.figure()   #------创建新图
+##plt.plot([1,2,3,4],[1,4,9,16],'db')#----指定形状和颜色
+##plt.axis([0,6,0,20])
+##plt.title('Earnings')
+##plt.xlabel('Days')
+##plt.ylabel('Dollars')
+##plt.figure()
+##xAxis=np.array([1,2,3,4])
+##print(xAxis)
+##test=np.arange(1,5)
+##print(test)
+##print(test==xAxis)  #------矩阵比较时，会对每个元素逐一比较
+##yAxis=xAxis**3      #------矩阵相对于列表的优点，可以直接计算
+##plt.plot(xAxis,yAxis,'oy')
+##plt.figure()
+##vals=[]
+##dieVals=[1,2,3,4,5,6]
+##for i in range(10000):
+##    vals.append(np.random.choice(dieVals)+np.random.choice(dieVals))
+##plt.hist(vals,bins=11)#----bins为条状图的条数，前面的数为x轴对应的数据，图像的y轴为对应数据的重复次数
+##
+##plt.show()
+
+
+
+
+
+
+
+
+##import matplotlib.pyplot as plt
+##import numpy as np
+##import math
+##class Location:
+##    def __init__(self,x,y):
+##        self.x=float(x)
+##        self.y=float(y)
+##    def move_1(self,xc,yc):
+##        return Location(self.x+float(xc),self.y+float(yc))
+##    def getCoords(self):
+##        return self.x,self.y
+##    def getDist(self,other):
+##        ox,oy=other.getCoords()
+##        xDist=self.x-ox
+##        yDist=self.y-oy
+##        return math.sqrt(xDist**2+yDist**2)
+##
+##class CompassPt:
+##    possibles=('N','S','E','W')
+##    def __init__(self,pt):
+##        if pt in self.possibles:
+##            self.pt=pt
+##        else:
+##            raise ValueError('in CompassPt.__init__')
+##    def move_2(self,dist):
+##        if self.pt=='N':
+##            return (0,dist)  ###( , )对应（x,y)
+##        elif self.pt=='S':
+##            return (0,-dist)
+##        elif self.pt=='E':
+##            return (dist,0)
+##        elif self.pt=='W':
+##            return (-dist,0)
+##        else:
+##            raise ValueError('in CompassPt.move')
+##
+##class Field:
+##    def __init__(self,Drunk_1,loc):
+##        self.Drunk_1=Drunk_1
+##        self.loc=loc
+##    def move_3(self,CP,dist):
+##        oldLoc=self.loc
+##        xc,yc=CP.move_2(dist)
+##        self.loc=oldLoc.move_1(xc,yc)
+##    def getLoc(self):
+##        return self.loc
+##    def getDrunk(self):
+##        return self.Drunk_1
+##
+##
+##class oddField(Field):
+##    def isChute(self):
+##        x,y=self.loc.getCoords()
+##        return (abs(x)-abs(y))==0
+##    def move_3(self,CP,dist):
+##        Field.move_3(self,CP,dist)
+##        if self.isChute():
+##            self.loc=Location(0,0)
+##
+##
+##
+##
+##
+##
+##
+##
+##class Drunk:                   #---------此Drunk在此细分化，保留原Drunk与其它类的沟通，分化了移动方式（CP的选取）
+##    def __init__(self,name):
+##        self.name=name
+##    def move(self,Field_1,CP,dist):                   
+##        if Field_1.getDrunk()!=self:
+##            raise ValueError('Drunk.move called with drunk not in field')
+##        Field_1.move_3(CP,dist)
+##
+##
+##class UsualDrunk(Drunk):   #-------接下来的类都为Drunk的子类（输入Drunk的信息为同一类，信息各不相同）
+##    def move(self,Field_1,dist=1):
+##        pt=np.random.choice(CompassPt.possibles)
+##        Drunk.move(self,Field_1,CompassPt(pt),dist)
+##
+##
+##class ColdDrunk(Drunk):
+##    def move(self,Field_1,dist=1):
+##        pt=np.random.choice(CompassPt.possibles)
+##        if pt =='S':
+##            Drunk.move(self,Field_1,CompassPt(pt),2*dist)
+##        else:
+##            Drunk.move(self,Field_1,CompassPt(pt),dist)
+##
+##class EWDrunk(Drunk):
+##    def move(self,Field_1,time=1):
+##        pt=np.random.choice(CompassPt.possibles)
+##        while pt!='E' and pt!='W':
+##            pt=np.random.choice(CompassPt.possibles)
+##        Drunk.move(self,Field_1,CompassPt(pt),time)
+##
+##def performTrial(time,Field_1):
+##    start=Field_1.getLoc()
+##    distances=[0.0]
+##    locs=[]
+##    for t in range(1,time+1):
+##        Field_1.getDrunk().move(Field_1)
+##        newLoc=Field_1.getLoc()
+##        distance=newLoc.getDist(start)
+##        distances.append(distance)
+##        loc=Field_1.getLoc().getCoords()
+##        #print(loc)
+##        locs.append(loc)
+##    return distances,locs
+##
+##
+##
+##def performSim(time,numTrials,drunkType,FieldType):   #--------多次进行上面的模拟
+##    distLists=[]
+##    locLists=[]
+##    for trial in range(numTrials):
+##        d=drunkType('Drunk'+str(trial))
+##        Field_1=FieldType(d,Location(0,0))
+##        distances,locs=performTrial(time,Field_1)
+##        #print(performTrial(time,Field_1))
+##        distLists.append(distances)
+##        locLists.append(locs)
+##    all_=[distLists,locLists]
+##    #print(locLists)
+##    return all_
+##def ansQuest(maxTime,numTrials,drunkType,FieldType,title):
+##    means=[]
+##    distLists=performSim(maxTime,numTrials,drunkType,FieldType)[0]
+##    locLists=performSim(maxTime,numTrials,drunkType,FieldType)[1]
+##    for t in range(maxTime+1):
+##        tot=0.0
+##        for distL in distLists:
+##            tot+=distL[t]       #------累加每第t步后距原点的距离（distance)
+##        means.append(tot/numTrials)
+##        
+####        print(len(distLists))
+####        print(tot)
+####        print(means)
+####        print(t)
+##    plt.figure()
+##    plt.plot(means)
+##    plt.ylabel('distance')
+##    plt.xlabel('time')
+##    plt.title(title)
+##    lastX=[]
+##    lastY=[]
+##    for locList in locLists:
+##        x,y=locList[-1]     #-------(for A in B) A[0]（或A[-1])每次只取一个，所以为“一个”B中的元素
+##        #print(x,y)
+##        lastX.append(x)
+##        lastY.append(y)
+##    plt.figure()
+##    plt.scatter(lastX,lastY)
+##    plt.xlabel('West/East Distance')
+##    plt.ylabel('North/South Distance')
+##    plt.title(title)
+##    plt.figure()
+##    plt.hist(lastX)
+##    plt.xlabel('West/East Distance')
+##    plt.ylabel('number of drunkers')
+##    plt.title(title)
+##    
+##    
+###ansQuest(500,1000,UsualDrunk,Field,'UsualDrunk')
+###ansQuest(500,1000,ColdDrunk,Field,'ColdDrunk')
+###ansQuest(500,1000,EWDrunk,Field,'EWDrunk')
+##ansQuest(500,1000,UsualDrunk,oddField,'UsualDrunk')
+##ansQuest(500,1000,ColdDrunk,oddField,'ColdDrunk')
+##ansQuest(500,1000,EWDrunk,oddField,'EWDrunk')
+###ansQuest(500,1000,FieldType=oddField,drunkType=UsualDrunk,title='Usual')  #---得出的平均距离图为相邻两步一上一下的折现（原因是走一步不会触发死点，走两步才有几率达到x=y)
+##plt.show()
+##
+
+
+
+
+
+
+##import math
+##import numpy as np
+##import matplotlib.pyplot as plt
+##
+##def flipTrial(numFlips):
+##    heads,tails=0,0
+##    for i in range(0,numFlips):
+##        coin=np.random.randint(0,2) #----生成在半开半闭区间[low,high)上离散均匀分布的整数值
+##        if coin==0:
+##            heads+=1
+##        else:
+##            tails+=1
+##    return heads,tails
+##
+##def simFlips(numFlips,numTrials):
+##    diffs=[]
+##    for i in range(0,numTrials):
+##        heads,tails=flipTrial(numFlips)
+##        #print(heads,tails)
+##        diffs.append(abs(heads-tails))
+##        
+##    diffs=np.array(diffs)
+##    print(diffs)
+##    diffMean=sum(diffs)/len(diffs)               #--------sum()所有数相加
+##                                                       #----此处差值（diffs)的平均值
+##    print(len(diffs))
+##    print(sum(diffs))
+##    print(type(diffs[0]))
+##    diffPercent=(diffs/float(numFlips))*100   #-----将元素(整数)化为浮点数
+##    print(diffPercent)
+##    print(type(diffPercent[0]))
+##    percentMean=sum(diffPercent)/len(diffPercent)     #----求percent Mean的平均值
+##    plt.hist(diffs)
+##    plt.axvline(diffMean,color='r',label='Mean')   #-----在x轴上添加一条水平线（括号内为线在x轴上的位置）
+##    plt.legend()                                   #-----放置一个图例（自动捕捉图中数据）
+##    titleString=str(numFlips)+' Flips, '+str(numTrials)+' Trials '
+##    plt.title(titleString)
+##    plt.xlabel('Difference between heads and tails')
+##    plt.ylabel('Number of Trials')
+##    plt.figure()
+##    plt.plot(diffPercent)
+##    plt.axhline(percentMean,color='r',label='Mean')  #------在y轴上添加一条水平线
+##    plt.legend()
+##    plt.title(titleString)
+##    plt.xlabel('Trial Number')
+##    plt.ylabel('Percent Difference between heads and tails')
+##
+##
+##simFlips(3,4000)
+##plt.show()
+##    
+
+
+
+
+
+
+##import numpy as np
+##import math
+##import locale
+##import matplotlib.pyplot as plt
+##
+##def formatInt(i):
+##    return locale.format('%d',i,grouping=True)    #----%d:格式化这个整型（int)
+##def throwDarts(numDarts,shouldPlot):
+##    inCircle=0
+##    estimates=[]
+##    for darts in range(1,numDarts+1,1):    #-----最后一个为间隔（默认为1）
+##        x=np.random.random()         #-----[0,1)随机浮点数
+##        y=np.random.random()
+##        if math.sqrt(x*x+y*y)<=1.0:
+##            inCircle+=1
+##        if shouldPlot:
+##            piGuess=4*(inCircle/float(darts))  #----π=4*in shadow area/in whole square
+##            estimates.append(piGuess)
+##        if darts%1000000==0:             #---余数为0
+##            piGuess=4*(inCircle/float(darts))
+##            dartsStr=locale.format('%d',darts,grouping=True)
+##            print('Estimate with',formatInt(darts),'darts:',piGuess)
+##    if shouldPlot:
+##        xAxis=np.arange(1,len(estimates)+1)
+##        plt.semilogx(xAxis,estimates)
+##        titleString='Estimations of pi,final estimate: '+str(piGuess)
+##        plt.title(titleString)
+##        plt.xlabel('Number of Darts Thrown')
+##        plt.ylabel('Estimate of pi')
+##        plt.axhline(3.14159)
+##    return 4*(inCircle/float(numDarts))
+##
+##def findPi(numDarts,shouldPlot=False):
+##    piGuess=throwDarts(numDarts,shouldPlot)
+##    print('Estimated value of pi with',formatInt(numDarts),'darts:',piGuess)
+##
+##
+##
+##findPi(10000,True)
+###findPi(10000000,True)
+##plt.show()
+
+
+
+
+##import numpy as np
+##import matplotlib.pyplot as plt
+##
+##
+##def getSpringData(fname):
+##    springData = open(fname, 'r')
+##    distances = []
+##    forces = []
+##    for line in springData:
+##        if line[0] == '#':
+##            continue
+##        line = line[:-1]
+##        print(line)
+##        elems = line.rsplit(',')
+##        print(elems)
+##        print(elems[0])
+##        print(type(elems[0]))
+##        distances.append(float(elems[0]))
+##        forces.append(float(elems[1]))
+##    return np.array(distances), np.array(forces)
+##
+##distances,forces=getSpringData('springData.txt')
+##plt.scatter(distances, forces)
+##plt.xlabel('Distance (Meters)')
+##plt.ylabel('|Force| (Newtons)')
+##plt.title('Force vs. Distance for Spring')
+##
+##k,b=np.polyfit(distances,forces,1) #---1为拟合函数的最高次数
+##yVals=k*distances+b
+##plt.plot(distances,yVals,color='r',linewidth=2)
+##plt.title('Force vs.Distance,k='+str(k))
+##
+##
+##
+##def rSquare(measured,estimated):
+##    diffs=(estimated-measured)**2
+##    mMean=measured.sum()/float(len(measured))
+##    print(mMean)
+##    var=(mMean-measured)**2
+##    print(diffs.sum())
+##    print(var.sum())
+##    return 1-diffs.sum()/var.sum()
+##
+##print('r^2=',rSquare(forces,yVals))
+##
+##k,b,c=np.polyfit(distances,forces,2) #---1为拟合函数的最高次数
+##yVals=k*(distances**2)+b*distances+c
+##plt.plot(distances,yVals,color='y',linewidth=2)
+##plt.title('Force vs.Distance,k='+str(k))
+##
+##print('r^2=',rSquare(forces,yVals))
+##plt.show()          
+        
+        
+
+
+
+##import matplotlib.pyplot as plt
+##import numpy as np
+##
+##def throwPair(vals1,vals2):
+##    d1=np.random.choice(vals1)
+##    d2=np.random.choice(vals2)
+##    return d1,d2
+##
+##def conductTrials(numThrows,die1,die2):
+##    throws=[]
+##    for i in range(numThrows):
+##        d1,d2=throwPair(die1,die2)
+##        throws.append(d1+d2)
+##    return throws
+##
+##fair=[1,2,3,4,5,6]
+##
+##numThrows=100000
+##throws=conductTrials(numThrows,fair,fair)
+##plt.hist(throws,11)
+##plt.xticks(range(2,13),['2','3','4','5','6','7','8','9','10','11','12'])#---设置x轴范围和显示的轴标签
+##plt.title('Distribution of Values')
+##plt.xlabel('Sum of Two Die')
+##plt.ylabel('Number of Throws')
+##
+##plt.figure()
+##sums=np.array([0]*14)
+###print(sums)
+###print(throws)
+##for val in range(2,13):
+##    sums[val]=throws.count(val)     #---该值出现次数
+##probs=sums[2:13]/float(numThrows)   #---概率列表
+###print(probs)
+###print(sum(probs))
+##xVals=np.arange(2,13)
+###print(xVals)
+##plt.plot(xVals,probs,label='Fair Dice')
+##plt.xticks(range(2,13), ['2','3','4','5','6','7','8','9','10','11','12'])
+##plt.title('Probability of a Value')
+##plt.xlabel('Sum of Two Die')
+##plt.ylabel('Probability')
+##plt.legend()
+##
+##
+##
+##def craps(die1,die2):
+##    d1,d2=throwPair(die1,die2)
+##    tot=d1+d2
+##    if tot in [7,11]:
+##        return True
+##    if tot in [2,3,12]:
+##        return False
+##    point=tot
+##    while True:
+##        d1,d2=throwPair(fair,fair)
+##        tot=d1+d2
+##        if tot==point:
+##            return True
+##        if tot==7:
+##            return False
+##
+##def simCraps(numBets,die1,die2):
+##    wins,losses=(0,0)
+##    for i in range(numBets):
+##        if craps(die1,die2):
+##            wins+=1
+##        else:
+##            losses+=1
+##    print(wins,losses)
+##    houseWin=float(losses)/float(numBets)
+##    print(houseWin)
+##    print('House winning percentage: '+str(100*houseWin)+'%')
+##    print(('House profits per $%d bet:$%d')%(numBets,losses-wins))
+##
+##simCraps(100000,fair,fair)
+##
+##
+##weighted=[1,1,1,1,1,1,2,3,4,5,6]
+##throws=conductTrials(numThrows,fair,weighted)
+##sums=np.array([0]*14)
+##for val in range(2,13):
+##    sums[val]=throws.count(val)
+##probs=sums[2:13]/float(numThrows)
+##xVal=np.arange(2,13)
+##plt.plot(xVals,probs,label='Weighted Dice')
+##plt.legend()
+##simCraps(100000,fair,weighted)
+##
+##plt.show()
+##
+##
+##
+##
+##
+##
+##数据收集注意事项：
+##1.明确分析来源，尽量查看原始数据；
+##2.伴随不代表因果；(存在隐藏变量"lurking variable")
+##3.不具代表性样本；
+##4.主观性数据伪造(提升)；
+##5.数据应放到具体环境中参考
+
+
+
+
+##import numpy as np
+##import matplotlib.pyplot as plt
+##
+##
+##class Stock:
+##    def __init__(self,price,distribution):
+##        self.price=price
+##        self.history=[price]
+##        self.distribution=distribution
+##        self.lastChange=0
+##    def setPrice(self,newprice):
+##        self.price=newprice
+##        self.history.append(newprice)
+##    def getPrice(self):
+##        return self.price
+##    def makeMove(self,mktBias,mo):
+##        oldPrice=self.price
+##        baseMove=self.distribution()+mktBias
+##        self.price=self.price*(1.0+baseMove)
+##        self.price+=mo*np.random.normal(.25,.25)*self.lastChange  #-----正态分布取值（randn标准正太（μ=0，σ^2=1））
+##        if self.price<0.01:
+##            self.price=0.0
+##        self.history.append(self.price)
+##        self.lastChange=self.price-oldPrice
+##    def showHistory(self,figNum):
+##        plt.figure(figNum)
+##        plt.plot(self.history)
+##        plt.title('Closing Price,Test'+str(figNum))
+##        plt.xlabel('Day')
+##        plt.ylabel('Price')
+##
+##
+##def unitTestStock():
+##    def runSim(stks,fig,mo):
+##        mean=0.0
+##        for stk in stks:
+##            for d in range(numDays):
+##                stk.makeMove(bias,mo)
+##            stk.showHistory(fig)
+##            mean+=stk.getPrice()
+##        mean=mean/float(numStks)
+##        plt.axhline(mean)
+##    numStks=20
+##    numDays=200
+##    stks1=[]
+##    stks2=[]
+##    bias=0.003
+##    mo=True
+##    for i in range(numStks):
+##        volatility=np.random.uniform(0,0.2)    #---随机生成一个浮点数
+##        d1=lambda:np.random.uniform(-volatility,volatility)#-----此时的d1可看作一个函数：def d1():
+##        d2=lambda:np.random.normal(0.0,volatility/2.0)      #                                d1=np.random.uniform(-volatility,volatility)
+##        stks1.append(Stock(100.0,d1))                       #                                return d1
+##        stks2.append(Stock(100.0,d2))
+##    #print(stks1)
+##    #print(len(stks1))
+##    runSim(stks1,1,mo)
+##    runSim(stks2,2,mo)
+##        
+##unitTestStock()
+##plt.show()
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
